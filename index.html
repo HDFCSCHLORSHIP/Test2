@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scholarship Test</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #50e3c2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 15px;
+      color: #333;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      max-width: 850px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      padding: 30px 40px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 5px;
+      position: relative;
+    }
+    h1::before {
+      content: "🎓";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-150%);
+      font-size: 2.8rem;
+      top: 0;
+    }
+
+    p.subheader {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #2980b9;
+      margin-bottom: 25px;
+      letter-spacing: 0.05em;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: #34495e;
+      margin: 30px 0 20px;
+      border-bottom: 2px solid #50e3c2;
+      padding-bottom: 6px;
+    }
+
+    .question {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #2c3e50;
+    }
+
+    .options {
+      margin-left: 15px;
+      margin-bottom: 12px;
+    }
+
+    .options label {
+      font-weight: 400;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: #34495e;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .options input[type="radio"] {
+      accent-color: #50e3c2;
+      cursor: pointer;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 10px;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      background: #27ae60;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(39, 174, 96, 0.3);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #219150;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(33, 145, 80, 0.5);
+    }
+
+    .result {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-top: 25px;
+      color: #2c3e50;
+      background: #dff0d8;
+      border-radius: 10px;
+      padding: 15px 20px;
+      box-shadow: 0 4px 8px rgba(39, 174, 96, 0.2);
+      user-select: none;
+    }
+
+    .timer {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #e74c3c;
+      font-weight: 700;
+      letter-spacing: 2px;
+      user-select: none;
+      font-family: 'Courier New', Courier, monospace;
+      text-shadow: 1px 1px 3px #c0392b;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 25px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+      button {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Scholarship Test / छात्रवृत्ति परीक्षा</h1>
+    <p class="subheader">Total Marks: 40 | Time: 5 Minutes | Best of luck! 🍀</p>
+    <div class="timer" id="timer">30:00</div>
+
+    <div class="question" id="math-questions"></div>
+
+    <div class="question" id="gk-questions"></div>
+
+    <div class="question" id="reasoning-questions"></div>
+
+    <button onclick="submitTest()">Submit Test / परीक्षा सबमिट करें</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      // Math - गणित
+      ["What is the value of 25 x 4 + 15 / 3? / 25 x 4 + 15 / 3 का मान क्या है?", ["110", "115", "100", "105"]], // Q1, correct A
+      ["Simplify: 7/8 + 1/4 / सरल करें: 7/8 + 1/4", ["1 1/8", "1 1/2", "1 3/8", "1"]], // Q2 correct A (harder than before)
+      ["A train travels 180 km in 3 hours. What is its average speed? / एक ट्रेन 3 घंटे में 180 किमी तय करती है। औसत गति क्या है?", ["70 km/h", "60 km/h", "90 km/h", "50 km/h"]], // Q3 correct B
+      ["What is the LCM of 12 and 15? / 12 और 15 का लघुत्तम समापवर्त्य क्या है?", ["30", "45", "50", "60"]], // Q4 correct D (harder)
+      ["If the perimeter of a square is 36 cm, what is the side length? / यदि वर्ग की परिधि 36 सेमी है, तो भुजा कितनी होगी?", ["6 cm", "9 cm", "12 cm", "8 cm"]], // Q5 correct B
+      ["Solve for x: 3x - 4 = 11 / हल करें: 3x - 4 = 11", ["3", "4", "5", "6"]], // Q6 correct C (harder than before)
+      ["Area of triangle with base 10 cm & height 6 cm? / आधार 10 सेमी और ऊँचाई 6 सेमी वाले त्रिकोण का क्षेत्रफल?", ["40 cm²", "60 cm²", "30 cm²", "20 cm²"]], // Q7 correct D
+      ["Bought at ₹200, sold at ₹250. Profit %? / ₹200 में खरीदा, ₹250 में बेचा। लाभ प्रतिशत?", ["20%", "25%", "30%", "15%"]], // Q8 correct B (harder)
+      ["40% of a number is 32. What is the number? / एक संख्या का 40% = 32 है। संख्या क्या है?", ["60", "80", "100", "120"]], // Q9 correct B
+
+      // GK - सामान्य ज्ञान
+      ["Who is the current Vice President of India? / भारत के वर्तमान उपराष्ट्रपति कौन हैं?", ["Jagdeep Dhankhar", "Narendra Modi", "Venkaiah Naidu", "Ram Nath Kovind"]], // Q10 correct B (harder)
+      ["Which planet has the highest number of moons? / सबसे ज्यादा चंद्रमा वाला ग्रह कौन सा है?", ["Saturn", "Jupiter", "Neptune", "Mars"]], // Q11 correct B (harder)
+      ["In which year did India gain independence? / भारत को स्वतंत्रता कब मिली?", ["1930", "1947", "1950", "1962"]], // Q12 correct B
+      ["What is the capital of Australia? / ऑस्ट्रेलिया की राजधानी क्या है?", ["Canberra", "Sydney", "Melbourne", "Perth"]], // Q13 correct B
+      ["Who wrote India's national anthem? / भारत का राष्ट्रगान किसने लिखा?", ["Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Purohit Neeraj"]], // Q14 correct D (harder)
+      // Tougher GK question (replacing last GK question)
+      ["Which Indian state has the longest coastline? / भारत का सबसे लंबा समुद्री तट किस राज्य का है?", ["Tamil Nadu", "Gujarat", "Andhra Pradesh", "Kerala"]], // Q15 correct B
+
+      // Reasoning - तर्कशक्ति
+      ["What comes next: 2, 4, 8, 16, ___ / आगे क्या आएगा: 2, 4, 8, 16, ___", ["24", "32", "20", "36"]], // Q16 correct B
+      ["If DOG = EPH, then CAT = ? / यदि DOG = EPH, तो CAT = ?", ["DBU", "EBV", "DBV", "DAU"]], // Q17 correct B (harder)
+      ["Find the odd one: Apple, Mango, Banana, Carrot / भिन्न पहचानें: सेब, आम, केला, गाजर", ["Apple", "Mango", "Carrot", "Banana"]], // Q18 correct B
+      ["Clock shows 3:15. Angle between hands? / घड़ी में 3:15 पर सुइयों के बीच कोण?", ["0°", "7.5°", "30°", "45°"]], // Q19 correct B
+      ["If all PENS are BOOKS & some BOOKS are TABLES, are all PENS TABLES? / यदि सभी पेन किताबें हैं और कुछ किताबें मेज हैं, तो सभी पेन मेज हैं?", ["No", "Can't Say", "Yes", "None"]], // Q20 correct B
+      ["Walks 3km North, 4km East. Direction from start? / व्यक्ति 3 किमी उत्तर, 4 किमी पूर्व चलता है। प्रारंभ बिंदु से दिशा?", ["Northwest", "Northeast", "Southwest", "Southeast"]], // Q21 correct B
+    ];
+
+    const answers = [
+      "110", "1 1/8", "60 km/h", "60", "9 cm", "5", "20 cm²", "25%", "80",
+      "Narendra Modi", "Jupiter", "1947", "Canberra", "Purohit Neeraj", "Gujarat",
+      "32", "EBV", "Mango", "7.5°", "Can't Say", "Northeast"
+    ];
+
+    function renderQuestions(sectionId, startIndex, count) {
+      const container = document.getElementById(sectionId);
+      for (let i = 0; i < count; i++) {
+        const [question, options] = questions[startIndex + i];
+        let html = `<div class='question'><label>${startIndex + i + 1}. ${question}</label>`;
+        options.forEach((option) => {
+          html += `
+            <div class="options">
+              <label><input type="radio" name="q${startIndex + i}" value="${option}"> ${option}</label>
+            </div>`;
+        });
+        html += '</div>';
+        container.innerHTML += html;
+      }
+    }
+
+    renderQuestions("math-questions", 0, 9);
+    renderQuestions("gk-questions", 9, 5);
+    renderQuestions("reasoning-questions", 14, 6);
+
+    function submitTest() {
+      clearInterval(timer);
+      let score = 0;
+      let answered = 0;
+
+      for (let i = 0; i < questions.length; i++) {
+        const options = document.getElementsByName(`q${i}`);
+        for (let opt of options) {
+          if (opt.checked) {
+            answered++;
+            if (opt.value === answers[i]) {
+              score += 2;
+            }
+            break;
+          }
+        }
+      }
+
+      document.getElementById("result").innerHTML = `
+        You answered ${answered} out of 20 questions.<br>
+        Your score is <strong>${score} / 40</strong>.
+      `;
+
+      setTimeout(() => {
+        alert(`🎉 Congratulations! You won a scholarship!\n\nAccording to your marks, you will receive ₹5429 credited soon.`);
+      }, 500);
+    }
+
+    // Timer
+    let timeLeft = 5 * 60;
+    const timerElement = document.getElementById("timer");
+    const timer = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      timeLeft--;
+      if (timeLeft < 0) {
+        clearInterval(timer);
+        submitTest();
+        alert("⏰ Time's up! Test submitted.");
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
